@@ -13,5 +13,7 @@ then run the devlopement server:
 npm run dev
 ```
 ---
+![home](https://raw.githubusercontent.com/abdelfetah18/next-tv/main/public/home.png)
 ---
+
 # Comming Soon
