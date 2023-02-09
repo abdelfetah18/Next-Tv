@@ -1,17 +1,25 @@
+import { Key } from "react"
 import { FaAngleLeft, FaBookmark } from "react-icons/fa"
 
-export default function WatchLatest(){
+import { Video, Thumb } from "@/interfaces/Global";
+
+interface Props {
+    latest: Video[],
+    recently: Video[]
+};
+
+const WatchLatest: React.FC<Props> = ({ latest, recently }) => {
     return (
         <div className="w-11/12 h-fit max-w-[1600px] flex flex-row">
             <div className="w-3/4 h-[600px] flex flex-col items-center">
                 <div className="w-11/12 text-lg text-white font-bold">Watch Latest</div>
                 <div className="w-11/12 h-px bg-gray-100"></div>
-                <div className="my-4 h-full overflow-auto w-11/12 flex flex-row items-center flex-wrap">
+                <div className="h-full overflow-auto w-11/12 flex flex-row flex-wrap my-4">
                     {
-                        [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20].map((m,index) => {
+                        latest.map((v: Video ,index: Key | null | undefined) => {
                             return(
-                                <div key={index} className="w-1/5 h-72 mb-16">
-                                    <div className="w-11/12 h-full bg-gray-500 rounded-lg relative">
+                                <div key={index} className="w-1/5 mb-4">
+                                    <div className="w-11/12 h-72 bg-gray-500 rounded-lg relative">
                                         <div className="absolute top-0 left-0 p-3 m-2 cursor-pointer bg-blue-900 rounded-full">
                                             <FaBookmark className="text-xs text-white" />
                                         </div>
@@ -22,8 +30,16 @@ export default function WatchLatest(){
                                             <FaAngleLeft className="text-xs text-white" />
                                         </div>
                                     </div>
-                                    <div className="text-lg font-bold text-white mt-2">Title</div>
-                                    <div className="text-sm font-semibold text-[#bababa]">category</div>
+                                    <div className="text-lg font-bold text-white mt-2">{v.title}</div>
+                                    <div className="w-full flex flex-row items-center flex-wrap">
+                                        {
+                                            v.categories.map((category,index) => {
+                                                return (
+                                                    <div key={index} className="text-xs font-semibold text-[#bababa] mr-2">{category.name}</div>
+                                                )
+                                            })
+                                        }
+                                    </div>
                                 </div>
                             )
                         })
@@ -35,12 +51,12 @@ export default function WatchLatest(){
                 <div className="w-11/12 h-px bg-gray-100"></div>
                 <div className="w-11/12 flex flex-row items-center my-4">
                 {
-                    [0,1,2].map((m,index) => {
+                    recently.map((v,index) => {
                         return(
                             <div key={index} className="w-1/3 h-40 mb-16">
                                 <div className="w-11/12 h-full bg-gray-500 rounded-lg"></div>
-                                <div className="text-base font-bold text-white mt-2">Title</div>
-                                <div className="text-xs font-semibold text-[#bababa]">category</div>
+                                <div className="text-base font-bold text-white mt-2">{v.title}</div>
+                                <div className="text-xs font-semibold text-[#bababa]">{v.title}</div>
                             </div>
                         )
                     })
@@ -50,3 +66,5 @@ export default function WatchLatest(){
         </div>
     )
 }
+
+export default WatchLatest;

@@ -14,6 +14,8 @@ npm run dev
 ```
 ---
 ![home](https://raw.githubusercontent.com/abdelfetah18/Next-Tv/main/public/home.png)
+![2](https://raw.githubusercontent.com/abdelfetah18/Next-Tv/main/public/2.png)
+![3](https://raw.githubusercontent.com/abdelfetah18/Next-Tv/main/public/3.png)
 ---
 
 # Comming Soon
