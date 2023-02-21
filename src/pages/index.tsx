@@ -10,7 +10,7 @@ export default function Home() {
       <div className="w-full flex flex-col items-center bg-gradient-to-b from-black via-gray-900/40 to-gray-900">
         <Header />
         <SearchBanner />
-        <WatchLatest latest={array} recently={array.slice(0,3)} />
+        <WatchLatest title="Watch Latest" latest={array} recently={array.slice(0,3)} />
       </div>
     </div>
   )

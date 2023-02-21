@@ -15,6 +15,10 @@ export default function Banner({ setToReady }){
                     <div className="text-xs font-bold px-2 rounded-3xl text-white border-2 border-white mr-2">Drama</div>
                     <div className="text-xs font-bold px-2 rounded-3xl text-white border-2 border-white mr-2">Action</div>
                 </div>
+                <div className="flex flex-row items-center mb-1">
+                    <div className="self-start text-sm text-white font-semibold bg-gray-900/80 px-4 rounded-lg mr-2">Duration: 45:00</div>
+                    <div className="self-start text-sm text-white font-semibold bg-gray-900/80 px-4 rounded-lg mr-2">5 Episodes</div>
+                </div>
                 <div className="self-start text-white font-semibold w-1/2 drop-shadow-2xl bg-black/40 rounded-lg">
                     {"The movie follows 17-year-old Daryn who finds out that his girlfriend is dying He sets out to give her an entire life in the last year she has left"}
                 </div>

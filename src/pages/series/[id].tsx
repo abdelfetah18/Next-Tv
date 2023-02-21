@@ -16,7 +16,7 @@ export default function Serie(){
                 {
                     ready_to_watch ? (<VideoPlayer video={array[0]} has_playlist={true} />) : (<Banner setToReady={setReadyToWatch} />)
                 }
-                <WatchLatest latest={array} recently={array.slice(0,3)} />
+                <WatchLatest title="Latest Series" latest={array} recently={array.slice(0,3)} />
             </div>
         </div>
     )

@@ -1,13 +1,15 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next';
+import crypto from "crypto";
+import client from '../../database/connection';
 
 type Data = {
-  name: string
+  session_id: string,
+  user: any
 }
 
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
-  res.status(200).json({ name: 'John Doe' })
+export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+  var user = client.getUser("cddf209e-460b-455d-bea9-8500a09fddf9");
+  user.then((user) => {
+    res.status(200).json({ session_id: crypto.randomUUID(), user });
+  });
 }

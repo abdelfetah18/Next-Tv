@@ -4,15 +4,16 @@ import { FaAngleLeft, FaBookmark } from "react-icons/fa"
 import { Video, Thumb } from "@/interfaces/Global";
 
 interface Props {
+    title: string,
     latest: Video[],
     recently: Video[]
 };
 
-const WatchLatest: React.FC<Props> = ({ latest, recently }) => {
+const WatchLatest: React.FC<Props> = ({ title, latest, recently }) => {
     return (
         <div className="w-11/12 h-fit max-w-[1600px] flex flex-row">
             <div className="w-3/4 h-[600px] flex flex-col items-center">
-                <div className="w-11/12 text-lg text-white font-bold">Watch Latest</div>
+                <div className="w-11/12 text-lg text-white font-bold">{title}</div>
                 <div className="w-11/12 h-px bg-gray-100"></div>
                 <div className="h-full overflow-auto w-11/12 flex flex-row flex-wrap my-4">
                     {

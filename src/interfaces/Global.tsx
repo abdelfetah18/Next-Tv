@@ -20,3 +20,24 @@ export interface Video {
     servers: Server[]
 };
 
+export interface Movie {
+    title: string,
+    description: string,
+    date: Date,
+    duration: string,
+    cover_image: string,
+    video: Video,
+    rate: number,
+    categories: Category[]
+};
+
+export interface UserCrendetials {
+    username: string,
+    password: string
+};
+
+export interface User {
+    username: string,
+    password: string,
+    email: string
+};
