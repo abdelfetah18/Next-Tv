@@ -11,6 +11,8 @@ export default function SignUp(){
                     <input type="password" className="w-3/4 text-base font-bold px-4 py-1 my-2 rounded-full" placeholder="password" />
                     <input type="password" className="w-3/4 text-base font-bold px-4 py-1 my-2 rounded-full" placeholder="confirm password" />
                     <div className="text-white text-base font-bold px-4 py-1 my-2 rounded-full bg-blue-500 cursor-pointer hover:bg-blue-600">Sign Up</div>
+                    <div className="text-white text-base font-bold">Or</div>
+                    <a href="/user/sign_in" className="text-blue-500 hover:text-blue-400 text-sm font-medium cursor-pointer">Already have an account</a>
                 </div>
                 <div className="text-white font-mono">
                     Watch your favorite movies and series now

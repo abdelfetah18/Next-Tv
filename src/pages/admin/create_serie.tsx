@@ -12,10 +12,10 @@ export default function Create(){
                     <div className="text-3xl text-white font-bold">Tv</div>
                 </div>
 
-                <Navigation path={"create_movie"} />
+                <Navigation path={"create_serie"} />
             </div>
             <div className="w-4/5 h-full overflow-auto flex flex-col items-center">
-                <div className="w-11/12 text-white font-bold text-3xl py-8">Create</div>
+                <div className="w-11/12 text-white font-bold text-3xl py-8">Create a serie</div>
                 <div className="w-11/12 flex flex-row">
                     <div className="w-2/3 bg-gray-800 py-8 mb-8 rounded-lg flex flex-col items-center">
                         <div className="w-11/12 flex flex-col items-center">
@@ -41,26 +41,7 @@ export default function Create(){
                             </div>
                         </div>
 
-                        <div className="w-11/12 flex flex-col items-center">
-                            <div className="w-full py-4 flex flex-row items-center">
-                                <div className="flex flex-row items-center">
-                                    <div className="py-4 px-2 rounded bg-blue-500"></div>
-                                    <div className="text-lg text-white font-bold ml-2">Server & Info</div>
-                                </div>
-                            </div>
-                            <div className="w-full flex flex-col items-center">
-                                <div className="w-11/12">
-                                    <div className="w-full">
-                                        <div className="text-white text-base font-bold py-1">Name</div>
-                                        <input className="focus:outline-none w-full px-4 py-2 rounded-lg bg-gray-700/50 text-gray-200" placeholder="Name" />
-                                    </div>
-                                    <div className="w-full">
-                                        <div className="text-white text-base font-bold py-2">Url</div>
-                                        <input className="focus:outline-none w-full px-4 py-2 rounded-lg bg-gray-700/50 text-gray-200" placeholder="Url" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
 
                         <div className="w-11/12 flex flex-col items-center">
                             <div className="w-full py-4 flex flex-row items-center">

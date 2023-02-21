@@ -12,12 +12,29 @@ export default function Create(){
                     <div className="text-3xl text-white font-bold">Tv</div>
                 </div>
 
-                <Navigation path={"create_movie"} />
+                <Navigation />
             </div>
             <div className="w-4/5 h-full overflow-auto flex flex-col items-center">
-                <div className="w-11/12 text-white font-bold text-3xl py-8">Create</div>
+                <div className="w-11/12 text-white font-bold text-3xl py-8">Add new episode</div>
                 <div className="w-11/12 flex flex-row">
                     <div className="w-2/3 bg-gray-800 py-8 mb-8 rounded-lg flex flex-col items-center">
+                        <div className="w-11/12 flex flex-col items-center">
+                            <div className="w-full pb-4 flex flex-row items-center">
+                                <div className="flex flex-row items-center">
+                                    <div className="py-4 px-2 rounded bg-blue-500"></div>
+                                    <div className="text-lg text-white font-bold ml-2">Serie & Info</div>
+                                </div>
+                            </div>
+                            <div className="w-full flex flex-col items-center">
+                                <div className="w-11/12 my-2">
+                                    <div className="w-full flex flex-row  items-end">
+                                        <div className="text-white text-base font-bold pb-1">Title:</div>
+                                        <div className="text-gray-300 text-sm font-bold pb-1 mx-4">Detective conan</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div className="w-11/12 flex flex-col items-center">
                             <div className="w-full pb-4 flex flex-row items-center">
                                 <div className="flex flex-row items-center">

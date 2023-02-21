@@ -4,7 +4,7 @@ import WatchLatest from "../components/WatchLatest";
 
 import { array } from "@/tests/videos";
 
-export default function Home() {
+export default function Home(){
   return (
     <div className="w-full background_image bg-black">
       <div className="w-full flex flex-col items-center bg-gradient-to-b from-black via-gray-900/40 to-gray-900">

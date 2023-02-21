@@ -12,7 +12,7 @@ export default function Dashboard(){
                     <div className="text-3xl text-white font-bold">Tv</div>
                 </div>
 
-                <Navigation />
+                <Navigation path={"dashboard"} />
             </div>
             <div className="w-4/5 flex flex-col items-center">
                 <div className="w-11/12 text-white font-bold text-3xl py-8">Dashboard</div>
