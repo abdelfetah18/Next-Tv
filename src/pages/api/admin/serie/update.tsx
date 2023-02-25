@@ -4,9 +4,9 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
     if(req.method == "POST"){
-        let movie = req.body;
-
-        client.updateMovie(movie).then((result) => {
+        let serie = req.body;
+        
+        client.updateSerie(serie).then((result) => {
             res.status(200).json({ status: "success", data: result });
         });
     }else{

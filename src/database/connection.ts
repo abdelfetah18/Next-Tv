@@ -3,7 +3,7 @@ import createClient from '@sanity/client';
 import { createReadStream } from "fs";
 import { basename } from "path";
 import { c_movie, c_server, c_user, c_user_credentials } from "@/types/client";
-import { s_movie } from "@/types/server";
+import { s_episode, s_movie, s_serie } from "@/types/server";
 
 class Client {
     client:any = null;
@@ -66,22 +66,37 @@ class Client {
     }
 
     async getMovieById(movie_id:string){
-        let movie = await this.client.fetch('*[_type=="movie" && _id==$movie_id]',{ movie_id });
-        return movie || null;
+        let movie = await this.client.fetch('*[_type=="movie" && _id==$movie_id][0]',{ movie_id });
+        return movie;
     }
 
     async getLatestSeries(){
         return await this.client.fetch('*[_type=="serie"][1..9]');
     }
 
-    async getSerieById(movie_id:string){
-        let serie = await this.client.fetch('*[_type=="serie" && _id==$movie_id]',{ movie_id });
-        return serie || null;
+    async getSerieById(serie_id:string){
+        let serie = await this.client.fetch('*[_type=="serie" && _id==$serie_id][0]',{ serie_id });
+        return serie;
+    }
+
+    async getEpisodeById(serie_id:string){
+        let serie = await this.client.fetch('*[_type=="episode" && _id==$serie_id][0]',{ serie_id });
+        return serie;
     }
 
     async initMovieDoc(){
         let movie_doc:any = await this.client.create({ _type: "movie", _id: "drafts." });
         return movie_doc;
+    }
+
+    async initSerieDoc(){
+        let serie_doc:any = await this.client.create({ _type: "serie", _id: "drafts." });
+        return serie_doc;
+    }
+
+    async initEpisodeDoc(){
+        let serie_doc:any = await this.client.create({ _type: "episode", _id: "drafts." });
+        return serie_doc;
     }
 
     async createServer(server:c_server){
@@ -107,7 +122,48 @@ class Client {
         // removing the draft
         await this.client.delete(movie._id);
         
-        return movie_r || null;
+        return movie_r;
+    }
+
+    async updateSerie(serie:s_serie){
+        // publish the document by changing the _id from drafts._id to _id.
+        let doc:s_serie = { 
+            _id: serie._id && serie._id.startsWith("drafts.") ? serie._id.slice(7) : serie._id,
+            title: serie.title,
+            description: serie.description,
+            categories: serie.categories,
+            cover_image: serie.cover_image,
+            date: (new Date()).toLocaleString(),
+            duration: serie.duration,
+            episodes: serie.episodes
+        };
+
+        let serie_r = await this.client.createOrReplace({ ...doc, _type: "serie" });
+        
+        // removing the draft
+        await this.client.delete(serie._id);
+        
+        return serie_r;
+    }
+
+    async updateEpisode(episode:s_episode){
+        // publish the document by changing the _id from drafts._id to _id.
+        let doc:s_episode = { 
+            _id: episode._id && episode._id.startsWith("drafts.") ? episode._id.slice(7) : episode._id,
+            title: episode.title,
+            description: episode.description,
+            cover_image: episode.cover_image,
+            date: (new Date()).toLocaleString(),
+            duration: episode.duration,
+            servers: episode.servers
+        };
+
+        let episode_r = await this.client.createOrReplace({ ...doc, _type: "episode" });
+        
+        // removing the draft
+        await this.client.delete(episode._id);
+        
+        return episode_r;
     }
 
     async upload_image(file_path:string){

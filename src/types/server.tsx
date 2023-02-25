@@ -27,3 +27,24 @@ export interface s_movie {
     duration: string,
     date: string
 };
+
+export interface s_episode {
+    _id: string,
+    title: string,
+    description: string,
+    date: string,
+    duration: string,
+    cover_image: s_image,
+    servers: s_ref[],
+};
+
+export interface s_serie {
+    _id: string,
+    title: string,
+    description: string,
+    date: string,
+    duration: string,
+    cover_image: s_image,
+    episodes: s_ref[],
+    categories: s_ref[],
+};

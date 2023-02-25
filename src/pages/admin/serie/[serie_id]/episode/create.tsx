@@ -1,14 +1,15 @@
 import client from "@/database/connection";
-import { c_movie } from "@/types/client";
+import { c_episode } from "@/types/client";
 
 
-export async function getServerSideProps() {
-    // init Movie Document
-    let doc: c_movie = await client.initMovieDoc();
+export async function getServerSideProps(context:any) {
+    let serie_id = context.query.serie_id;
+    // init Episode Document
+    let doc: c_episode = await client.initEpisodeDoc();
     
     return {
         redirect: {
-            destination: '/admin/movie/'+doc._id,
+            destination: '/admin/serie/'+serie_id+'/episode/'+doc._id,
             permanent: false,
         },
     }
