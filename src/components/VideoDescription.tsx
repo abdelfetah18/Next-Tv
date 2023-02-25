@@ -1,4 +1,4 @@
-import { Video } from "@/interfaces/Global";
+import { Video } from "@/types/client";
 
 interface Props {
     video: Video

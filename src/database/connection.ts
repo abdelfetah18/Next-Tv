@@ -1,6 +1,9 @@
 import crypto from "crypto";
 import createClient from '@sanity/client';
-import { UserCrendetials, User } from "@/interfaces/Global";
+import { createReadStream } from "fs";
+import { basename } from "path";
+import { c_movie, c_server, c_user, c_user_credentials } from "@/types/client";
+import { s_movie } from "@/types/server";
 
 class Client {
     client:any = null;
@@ -14,7 +17,7 @@ class Client {
         });
     }
 
-    async SignIn(user:UserCrendetials){
+    async SignIn(user:c_user_credentials){
         let hash = crypto.createHash("sha512");
         hash.update(user.password);
         let hashed_password = hash.digest("hex");
@@ -32,7 +35,7 @@ class Client {
         }
     }
 
-    async SignUp(user:User){
+    async SignUp(user:c_user){
         let hash = crypto.createHash("sha512");
         hash.update(user.password);
         let hashed_password = hash.digest("hex");
@@ -74,6 +77,42 @@ class Client {
     async getSerieById(movie_id:string){
         let serie = await this.client.fetch('*[_type=="serie" && _id==$movie_id]',{ movie_id });
         return serie || null;
+    }
+
+    async initMovieDoc(){
+        let movie_doc:any = await this.client.create({ _type: "movie", _id: "drafts." });
+        return movie_doc;
+    }
+
+    async createServer(server:c_server){
+        let server_doc = await this.client.create({ _type: "server", name: server.name, url: server.url });
+        return server_doc;
+    }
+
+    async updateMovie(movie:s_movie){
+        // publish the document by changing the _id from drafts._id to _id.
+        let doc:s_movie = { 
+            _id: movie._id && movie._id.startsWith("drafts.") ? movie._id.slice(7) : movie._id,
+            title: movie.title,
+            description: movie.description,
+            servers: movie.servers,
+            categories: movie.categories,
+            cover_image: movie.cover_image,
+            date: (new Date()).toLocaleString(),
+            duration: movie.duration,
+        };
+
+        let movie_r = await this.client.createOrReplace({ ...doc, _type: "movie" });
+        
+        // removing the draft
+        await this.client.delete(movie._id);
+        
+        return movie_r || null;
+    }
+
+    async upload_image(file_path:string){
+        let imageAsset = await this.client.assets.upload('image', createReadStream(file_path), { filename: basename(file_path) });
+        return imageAsset;
     }
 }
 

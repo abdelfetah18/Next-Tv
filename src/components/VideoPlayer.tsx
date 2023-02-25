@@ -1,4 +1,4 @@
-import { Video, Thumb, Server } from "@/interfaces/Global";
+import { Video, Thumb, Server } from "@/types/client";
 import { useState } from "react";
 import Box from "./Box";
 import VideoDescription from "./VideoDescription";

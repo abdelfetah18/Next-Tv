@@ -1,4 +1,4 @@
-import { Video, Thumb } from "@/interfaces/Global";
+import { Video, Thumb } from "@/types/client";
 
 export var array : Video[] = [];
 

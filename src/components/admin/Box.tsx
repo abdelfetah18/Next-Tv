@@ -1,7 +1,7 @@
 import { Key } from "react"
 import { FaAngleLeft, FaBookmark } from "react-icons/fa"
 
-import { Video, Thumb } from "@/interfaces/Global";
+import { Video, Thumb } from "@/types/client";
 
 interface Props {
     title: string,
