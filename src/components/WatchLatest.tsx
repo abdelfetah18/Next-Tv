@@ -21,17 +21,18 @@ const WatchLatest: React.FC<Props> = ({ title, latest, recently }) => {
                             return(
                                 <div key={index} className="w-1/5 mb-4">
                                     <div className="w-11/12 h-72 bg-gray-500 rounded-lg relative">
+                                        <img className="h-full rounded-lg" src={v.cover_image.url} />
                                         <div className="absolute top-0 left-0 p-3 m-2 cursor-pointer bg-blue-900 rounded-full">
                                             <FaBookmark className="text-xs text-white" />
                                         </div>
                                         <div className="absolute top-0 right-0 m-2 cursor-pointer bg-blue-900/50 rounded-full border-green-500 border-2">
                                             <div className="text-xs text-white py-2 px-1 font-semibold">10.0</div>
                                         </div>
-                                        <div className="absolute bottom-0 left-0 p-3 m-2 cursor-pointer bg-blue-900 rounded-full">
+                                        <a href={"/movies/"+v._id} className="absolute bottom-0 left-0 p-3 m-2 cursor-pointer bg-blue-900 rounded-full">
                                             <FaAngleLeft className="text-xs text-white" />
-                                        </div>
+                                        </a>
                                     </div>
-                                    <div className="text-lg font-bold text-white mt-2">{v.title}</div>
+                                    <div className="text-base font-bold text-white mt-2">{v.title}</div>
                                     <div className="w-full flex flex-row items-center flex-wrap">
                                         {
                                             v.categories.map((category,index) => {

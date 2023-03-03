@@ -70,7 +70,10 @@ export default function Create({ serie_doc }:Props){
 
         axios.post("/api/admin/serie/update", data).then((response) => {
             // TODO: Show a success message and redirect to serie page
-            console.log(response.data);            
+            console.log(response.data);  
+            if(response.data.status == "success"){
+                window.location.pathname = "/series/"+data._id;
+            }          
         });
     }
 

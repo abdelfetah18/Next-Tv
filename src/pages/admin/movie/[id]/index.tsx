@@ -77,7 +77,10 @@ export default function Create({ movie_doc }:Props){
 
         axios.post("/api/admin/movie/update", data).then((response) => {
             // TODO: Show a success message and redirect to movie page
-            console.log(response.data);            
+            console.log(response.data);
+            if(response.data.status == "success"){
+                window.location.pathname = "/movies/"+data._id;
+            }            
         });
     }
 

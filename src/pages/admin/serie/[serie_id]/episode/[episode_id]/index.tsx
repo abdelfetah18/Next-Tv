@@ -64,7 +64,7 @@ export default function Create({ episode_doc }:Props){
 
         axios.post("/api/admin/episode/update", data).then((response) => {
             // TODO: Show a success message and redirect to episode page
-            console.log(response.data);            
+            console.log(response.data);          
         });
     }
 
