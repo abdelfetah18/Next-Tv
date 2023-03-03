@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
 
-const DropBox = function ({ list, selected, setSelected }){
+interface Props {
+    list: any[],
+    selected: any,
+    setSelected: (state: any) => void
+};
+
+const DropBox = function ({ list, selected, setSelected }:Props){
     const [is_open,setIsOpen] = useState(false);
 
     return (

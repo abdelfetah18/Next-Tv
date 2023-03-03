@@ -40,7 +40,7 @@ export default function Dashboard(){
                             {
                                 [0,1,2,3].map((item,index) => {
                                     return(
-                                        <div className="w-11/12 flex flex-row items-center mb-2 cursor-pointer rounded-lg hover:bg-gray-900/30">
+                                        <div key={index} className="w-11/12 flex flex-row items-center mb-2 cursor-pointer rounded-lg hover:bg-gray-900/30">
                                             <div className="w-16 h-16 rounded-lg bg-gray-900"></div>
                                             <div className="h-full flex-grow flex flex-row items-center ">
                                                 <div className="h-full flex-grow px-4 py-2 text-lg font-bold text-white">Title</div>

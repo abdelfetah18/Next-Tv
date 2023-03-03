@@ -1,12 +1,12 @@
 import { Key } from "react"
 import { FaAngleLeft, FaBookmark } from "react-icons/fa"
 
-import { Video, Thumb } from "@/types/client";
+import { c_movie } from "@/types/client";
 
 interface Props {
     title: string,
-    latest: Video[],
-    recently: Video[]
+    latest: c_movie[],
+    recently: c_movie[]
 };
 
 const WatchLatest: React.FC<Props> = ({ title, latest, recently }) => {
@@ -17,7 +17,7 @@ const WatchLatest: React.FC<Props> = ({ title, latest, recently }) => {
                 <div className="w-11/12 h-px bg-gray-100"></div>
                 <div className="h-full overflow-auto w-11/12 flex flex-row flex-wrap my-4">
                     {
-                        latest.map((v: Video ,index: Key | null | undefined) => {
+                        latest.map((v: c_movie ,index: Key | null | undefined) => {
                             return(
                                 <div key={index} className="w-1/5 mb-4">
                                     <div className="w-11/12 h-72 bg-gray-500 rounded-lg relative">

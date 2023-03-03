@@ -24,7 +24,17 @@ export default function Card(){
     )
 }
 
-const Tab = ({ Icon, onClick, is_selected, title, value, percent, percent_state }) => {
+interface TabProps {
+    Icon: any,
+    onClick: (state:string) => void,
+    is_selected: boolean,
+    title: string,
+    value: string,
+    percent: string,
+    percent_state: string
+};
+
+const Tab = ({ Icon, onClick, is_selected, title, value, percent, percent_state }:TabProps) => {
     return(
         <div onClick={(ev) => onClick(title)} className="w-1/2 flex flex-col items-center p-2">
             <div className={"w-full flex flex-col items-center rounded-lg px-4 py-2 cursor-pointer hover:bg-gray-700/20 "+(is_selected ? "bg-gray-800":"")}>

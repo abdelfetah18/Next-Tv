@@ -30,6 +30,7 @@ export interface s_movie {
 
 export interface s_episode {
     _id: string,
+    serie: s_ref,
     title: string,
     description: string,
     date: string,
@@ -45,6 +46,5 @@ export interface s_serie {
     date: string,
     duration: string,
     cover_image: s_image,
-    episodes: s_ref[],
     categories: s_ref[],
 };

@@ -1,4 +1,4 @@
-import { Formidable } from "formidable";
+import { Formidable, File } from "formidable";
 import client from '@/database/connection';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
@@ -11,14 +11,14 @@ export const config = {
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
     if(req.method == "POST"){
         var form = new Formidable();
-        form.parse(req,async ( err,fields, files) => {
+        form.parse(req,async ( err, fields, files) => {
             if(err){
                 res.status(200).json({
                     status:"error",
                     message:"something went wrong!"
                 });
             }else{
-                let image = files["image"];
+                let image = files["image"] as File;
                 client.upload_image(image.filepath).then(imgAsset => {        
                     res.status(200).json({ status: "success", image: imgAsset });
                 });

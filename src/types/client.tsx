@@ -22,11 +22,17 @@ export interface c_server {
     date: string
 };
 
+export interface c_asset {
+    _id: string,
+    url: string,
+    originalFilename: string
+};
+
 export interface c_movie {
     _id: string,
     title: string,
     description: string,
-    cover_image: string,
+    cover_image: c_asset,
     categories: c_category[],
     servers: c_server[],
     duration: string,
@@ -35,11 +41,12 @@ export interface c_movie {
 
 export interface c_episode {
     _id: string,
+    serie: string,
     title: string,
     description: string,
     date: string,
     duration: string,
-    cover_image: string,
+    cover_image: c_asset,
     servers: c_server[],
 };
 
@@ -49,7 +56,7 @@ export interface c_serie {
     description: string,
     date: string,
     duration: string,
-    cover_image: string,
+    cover_image: c_asset,
     episodes: c_episode[],
     categories: c_category[],
 };

@@ -1,10 +1,10 @@
-import { Video, Thumb, Server } from "@/types/client";
+import { c_episode, c_movie, c_serie } from "@/types/client";
 import { useState } from "react";
 import Box from "./Box";
 import VideoDescription from "./VideoDescription";
 
 interface Props {
-    video: Video,
+    video: c_movie,
     has_playlist: boolean
 };
 

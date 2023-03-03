@@ -1,7 +1,7 @@
-import { Video } from "@/types/client";
+import { c_episode, c_movie, c_serie } from "@/types/client";
 
 interface Props {
-    video: Video
+    video: c_movie | c_serie
 };
 
 const VideoDescription:React.FC<Props> = ({ video }) => {

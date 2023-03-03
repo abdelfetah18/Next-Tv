@@ -1,6 +1,10 @@
 import { FaBookmark } from "react-icons/fa";
 
-export default function Banner({ setToReady }){
+interface Props {
+    setToReady: (state:boolean) => void
+};
+
+export default function Banner({ setToReady }:Props){
 
     function watch(){
         setToReady(true);

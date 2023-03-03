@@ -5,7 +5,7 @@ import { c_episode } from "@/types/client";
 export async function getServerSideProps(context:any) {
     let serie_id = context.query.serie_id;
     // init Episode Document
-    let doc: c_episode = await client.initEpisodeDoc();
+    let doc: c_episode = await client.initEpisodeDoc(serie_id);
     
     return {
         redirect: {
