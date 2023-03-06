@@ -21,6 +21,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
                 let image = files["image"] as File;
                 client.upload_image(image.filepath).then(imgAsset => {        
                     res.status(200).json({ status: "success", image: imgAsset });
+                }).catch(err => {
+                    res.status(200).json({ status: "error", message: "something went wrong!", error: err });
                 });
             }
         });

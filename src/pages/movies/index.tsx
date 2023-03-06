@@ -10,7 +10,7 @@ export default function Movies(){
     
     useEffect(() => {
         getLatestMovies();
-        // getRecentMovies(); // Not Implemented
+        // getRecentMovies(); // TODO: Not Implemented
     },[]);
 
     function getLatestMovies(){

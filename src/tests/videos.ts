@@ -1,6 +1,6 @@
-import { c_movie } from "@/types/client";
+import { c_latest, c_movie } from "@/types/client";
 
-export var array : c_movie[] = [];
+export var array : c_latest[] = [];
 
 for(let i = 0; i < 10; i++)
   array.push({
@@ -24,5 +24,7 @@ for(let i = 0; i < 10; i++)
         }
     ],
     date: "01-06-2003",
-    duration: "1h 30m"
+    duration: "1h 30m",
+    _type: "movies",
+    episodes: []
 });

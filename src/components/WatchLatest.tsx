@@ -1,11 +1,11 @@
 import { Key } from "react"
 import { FaAngleLeft, FaBookmark } from "react-icons/fa"
 
-import { c_movie } from "@/types/client";
+import { c_latest, c_movie, c_serie } from "@/types/client";
 
 interface Props {
     title: string,
-    latest: c_movie[],
+    latest: c_latest[],
     recently: c_movie[]
 };
 
@@ -17,7 +17,7 @@ const WatchLatest: React.FC<Props> = ({ title, latest, recently }) => {
                 <div className="w-11/12 h-px bg-gray-100"></div>
                 <div className="h-full overflow-auto w-11/12 flex flex-row flex-wrap my-4">
                     {
-                        latest.map((v: c_movie ,index: Key | null | undefined) => {
+                        latest.map((v: c_latest ,index: Key | null | undefined) => {
                             return(
                                 <div key={index} className="w-1/5 mb-4">
                                     <div className="w-11/12 h-72 bg-gray-500 rounded-lg relative">
@@ -28,7 +28,7 @@ const WatchLatest: React.FC<Props> = ({ title, latest, recently }) => {
                                         <div className="absolute top-0 right-0 m-2 cursor-pointer bg-blue-900/50 rounded-full border-green-500 border-2">
                                             <div className="text-xs text-white py-2 px-1 font-semibold">10.0</div>
                                         </div>
-                                        <a href={"/movies/"+v._id} className="absolute bottom-0 left-0 p-3 m-2 cursor-pointer bg-blue-900 rounded-full">
+                                        <a href={v._type == "serie" ?("/series/"+v._id) : ("/movies/"+v._id)} className="absolute bottom-0 left-0 p-3 m-2 cursor-pointer bg-blue-900 rounded-full">
                                             <FaAngleLeft className="text-xs text-white" />
                                         </a>
                                     </div>

@@ -5,16 +5,37 @@ import VideoPlayer from "@/components/VideoPlayer";
 
 import { array } from "@/tests/videos";
 import { useEffect, useState } from "react";
-import { c_movie } from "@/types/client";
+import { c_latest, c_movie } from "@/types/client";
 import axios from "axios";
 
 export default function Movie(){
+    // FIXME: remove these inits
+    const init_movie: c_latest = { 
+        _id:"",
+        _type:"",
+        categories:[],
+        cover_image:{
+            _id:"",
+            originalFilename:"",
+            url:""
+        },
+        date:"",
+        description:"",
+        duration:"",
+        episodes:[],
+        servers:[],
+        title:"",
+        total_episodes: 0
+    };
+
     // TODO: do some transition animation when the value in this state is changed. example: FadeOut, FadeIn...
     const [ready_to_watch,setReadyToWatch] = useState(false);
-    const [movie,setMovie] = useState({} as c_movie);
+    const [movie,setMovie] = useState(init_movie);
+    const [movies,setMovies] = useState([]);
 
     useEffect(() => {
         getMovie();
+        getLatestMovies();
     },[]);
 
     function getMovie(){
@@ -29,6 +50,16 @@ export default function Movie(){
         });
     }
 
+    function getLatestMovies(){
+        axios.get("/api/movies").then(response => {
+            if(response.data.status == "success"){
+                setMovies(response.data.data);
+            }else{
+                // FIXME: implement a error handing method. (like showing a error message or something)
+            }
+        }).catch(err => console.log(err));
+    }
+
     return(
         <div className="w-full background_image bg-black">
             <div className="w-full flex flex-col items-center bg-gradient-to-b from-black via-gray-900/40 to-gray-900">
@@ -36,7 +67,7 @@ export default function Movie(){
                 {
                     ready_to_watch ? (<VideoPlayer video={movie} has_playlist={false} />) : (<Banner video={movie} setToReady={setReadyToWatch} />)
                 }
-                <WatchLatest title="Latest Movies" latest={array} recently={array.slice(0,3)} />
+                <WatchLatest title="Latest Movies" latest={movies} recently={array.slice(0,3)} />
             </div>
         </div>
     )

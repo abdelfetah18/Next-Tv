@@ -5,9 +5,9 @@ import { basename } from "path";
 import { c_movie, c_server, c_user, c_user_credentials } from "@/types/client";
 import { s_episode, s_movie, s_serie } from "@/types/server";
 
-const movie_props = '{ _id, title, description, "cover_image": cover_image.asset->, categories[]->, servers[]->, duration, date }';
-const episode_props = '{ _id, "serie": serie._ref, title, description, "cover_image": cover_image.asset->, servers[]->, duration, date }';
-const serie_props = '{ _id, title, description, "cover_image": cover_image.asset->, categories[]->, "episodes":*[_type=="episode" && serie._ref==^._id]'+episode_props+', duration, date }';
+const movie_props = '{ _id, title, description, "cover_image": cover_image.asset->, categories[]->, servers[]->, duration, date, _createdAt, _type }';
+const episode_props = '{ _id, "serie": serie._ref, title, description, "cover_image": cover_image.asset->, servers[]->, duration, date, _createdAt, _type }';
+const serie_props = '{ _id, title, description, "cover_image": cover_image.asset->, categories[]->, "episodes":*[_type=="episode" && serie._ref==^._id]'+episode_props+', duration, date, _createdAt, _type }';
 
 class Client {
     client:any = null;
@@ -92,7 +92,7 @@ class Client {
             servers: movie.servers,
             categories: movie.categories,
             cover_image: movie.cover_image,
-            date: (new Date()).toLocaleString(),
+            date: "",
             duration: movie.duration,
         };
 
@@ -183,6 +183,11 @@ class Client {
     async upload_image(file_path:string){
         let imageAsset = await this.client.assets.upload('image', createReadStream(file_path), { filename: basename(file_path) });
         return imageAsset;
+    }
+
+    async getWatchLatest(){
+        let watch_latest = await this.client.fetch('[...*[_type == "movie"]'+movie_props+',...*[_type == "serie"]'+serie_props+'] | order(_createdAt desc)');
+        return watch_latest;
     }
 }
 

@@ -1,9 +1,9 @@
-import { c_movie } from "@/types/client";
+import { c_latest, c_movie } from "@/types/client";
 import { FaBookmark } from "react-icons/fa";
 
 interface Props {
     setToReady: (state:boolean) => void,
-    video: c_movie
+    video: c_latest
 };
 
 export default function Banner({ setToReady, video }:Props){
@@ -25,12 +25,21 @@ export default function Banner({ setToReady, video }:Props){
                     <div className="ml-4 flex-grow flex flex-col">
                         <div className="text-3xl font-bold text-white">{video.title}</div>
                         <div className="flex flex-row items-center my-2">
-                            <div className="text-xs font-bold px-2 rounded-3xl text-white border-2 border-white mr-2">Drama</div>
-                            <div className="text-xs font-bold px-2 rounded-3xl text-white border-2 border-white mr-2">Action</div>
+                            {
+                                video.categories.map((c,i) => {
+                                    return (
+                                        <div key={i} className="text-xs font-bold px-2 rounded-3xl text-white border-2 border-white mr-2">{c.name}</div>
+                                    )
+                                })
+                            }
                         </div>
                         <div className="flex flex-row items-center mb-1">
                             <div className="self-start text-sm text-white font-semibold bg-gray-900/80 px-4 rounded-lg mr-2">Duration: {video.duration}</div>
-                            <div className="self-start text-sm text-white font-semibold bg-gray-900/80 px-4 rounded-lg mr-2">5 Episodes</div>
+
+                            {video.total_episodes != undefined && (
+                                <div className="self-start text-sm text-white font-semibold bg-gray-900/80 px-4 rounded-lg mr-2">{video.total_episodes+" Episodes"}</div>
+                            )}
+                        
                         </div>
                         <div className="self-start text-sm text-white font-semibold w-1/2 drop-shadow-2xl bg-black/40 rounded-lg p-2">{video.description}</div>
                         <div className="flex flex-row items-center my-2">
@@ -40,7 +49,7 @@ export default function Banner({ setToReady, video }:Props){
                             </div>
                         </div>
                     </div>
-                    <img className="h-full rounded-lg" src={video.cover_image ? video.cover_image.url : "/thumb.jpg"} />
+                    <img className="h-80 rounded-lg" src={video.cover_image ? video.cover_image.url : "/thumb.jpg"} />
                 </div>
            </div>
         </div>
