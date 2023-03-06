@@ -7,5 +7,4 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }).catch(err => {
         res.status(200).json({ status: "error", message: "something went wrong!", error: err });
     });
-    
 }

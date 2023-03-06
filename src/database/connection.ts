@@ -27,13 +27,15 @@ class Client {
         let hashed_password = hash.digest("hex");
         let _user = await this.client.fetch('*[_type=="users" && username==$username && password==$hashed_password]{ _id,username,profile_image,email }',{ username: user.username, hashed_password });
         if(_user.length > 0){
+            // FIXME: find a better way to generate session_id
             let session_id = crypto.randomUUID();
-            await this.client.create({
+            let session = await this.client.create({
                 _type: "session",
-                user: { _ref: _user[0]._id },
+                user: { _type: "reference", _ref: _user[0]._id },
                 session_id: session_id
             });
-            return _user[0];
+
+            return session;
         }else{
             return null;
         }
@@ -53,6 +55,11 @@ class Client {
 
     async SignOut(session_id:string){
         return await this.client.delete({ query: '*[_type=="session" && session_id==$session_id]', params:{ session_id } });
+    }
+
+    async Auth(session_id:string){
+        let auth = await this.client.fetch('*[_type=="session" && session_id==$session_id]',{ session_id }); 
+        return auth;
     }
 
     async getUser(session_id:string){

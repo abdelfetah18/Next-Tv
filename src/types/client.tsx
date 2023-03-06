@@ -2,7 +2,6 @@ export interface c_user {
     username: string,
     password: string,
     email: string,
-
 };
 
 export interface c_user_credentials {
