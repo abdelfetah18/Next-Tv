@@ -2,8 +2,7 @@ import Banner from "@/components/Banner";
 import Header from "@/components/Header";
 import VideoPlayer from "@/components/VideoPlayer";
 import WatchLatest from "@/components/WatchLatest";
-import { array } from "@/tests/videos";
-import { c_latest, c_serie } from "@/types/client";
+import { c_latest } from "@/types/client";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -31,11 +30,13 @@ export default function Serie(){
     const [ready_to_watch,setReadyToWatch] = useState(false);
     const [serie, setSerie] = useState(init_serie);
     const [series,setSeries] = useState([]);
+    const [recently,setRecently] = useState([]);
 
 
     useEffect(() => {
         getSerie();
         getLatestSeries();
+        getRecently();
     },[]);
 
     function getSerie(){
@@ -59,14 +60,26 @@ export default function Serie(){
             }
         }).catch(err => console.log(err));
     }
+
+    function getRecently(){
+        axios.get("/api/recently").then(response => {
+          console.log(response.data);
+          if(response.data.status == "success"){
+            setRecently(response.data.data);
+          }
+        }).catch(err => {
+          console.log({ err });
+        });
+    }
+
     return(
         <div className="w-full background_image bg-black">
             <div className="w-full flex flex-col items-center bg-gradient-to-b from-black via-gray-900/40 to-gray-900">
                 <Header />
                 {
-                    ready_to_watch ? (<VideoPlayer video={array[0]} has_playlist={true} />) : (<Banner video={serie} setToReady={setReadyToWatch} />)
+                    ready_to_watch ? (<VideoPlayer video={serie} has_playlist={true} />) : (<Banner video={serie} setToReady={setReadyToWatch} />)
                 }
-                <WatchLatest title="Latest Series" latest={series} recently={array.slice(0,3)} />
+                <WatchLatest title="Latest Series" latest={series} recently={recently} />
             </div>
         </div>
     )

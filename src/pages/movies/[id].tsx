@@ -2,10 +2,8 @@ import Header from "@/components/Header";
 import Banner from "@/components/Banner";
 import WatchLatest from "@/components/WatchLatest";
 import VideoPlayer from "@/components/VideoPlayer";
-
-import { array } from "@/tests/videos";
 import { useEffect, useState } from "react";
-import { c_latest, c_movie } from "@/types/client";
+import { c_latest } from "@/types/client";
 import axios from "axios";
 
 export default function Movie(){
@@ -32,10 +30,12 @@ export default function Movie(){
     const [ready_to_watch,setReadyToWatch] = useState(false);
     const [movie,setMovie] = useState(init_movie);
     const [movies,setMovies] = useState([]);
+    const [recently,setRecently] = useState([]);
 
     useEffect(() => {
         getMovie();
         getLatestMovies();
+        getRecently();
     },[]);
 
     function getMovie(){
@@ -60,6 +60,17 @@ export default function Movie(){
         }).catch(err => console.log(err));
     }
 
+    function getRecently(){
+        axios.get("/api/recently").then(response => {
+          console.log(response.data);
+          if(response.data.status == "success"){
+            setRecently(response.data.data);
+          }
+        }).catch(err => {
+          console.log({ err });
+        });
+    }
+
     return(
         <div className="w-full background_image bg-black">
             <div className="w-full flex flex-col items-center bg-gradient-to-b from-black via-gray-900/40 to-gray-900">
@@ -67,7 +78,7 @@ export default function Movie(){
                 {
                     ready_to_watch ? (<VideoPlayer video={movie} has_playlist={false} />) : (<Banner video={movie} setToReady={setReadyToWatch} />)
                 }
-                <WatchLatest title="Latest Movies" latest={movies} recently={array.slice(0,3)} />
+                <WatchLatest title="Latest Movies" latest={movies} recently={recently} />
             </div>
         </div>
     )

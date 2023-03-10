@@ -196,6 +196,11 @@ class Client {
         let watch_latest = await this.client.fetch('[...*[_type == "movie"]'+movie_props+',...*[_type == "serie"]'+serie_props+'] | order(_createdAt desc)');
         return watch_latest;
     }
+
+    async getRecently(){
+        let recent = await this.client.fetch('[...*[_type == "movie"]'+movie_props+',...*[_type == "serie"]'+serie_props+'] | order(_createdAt desc)[0..2]');
+        return recent;
+    }
 }
 
 const client = new Client();

@@ -1,4 +1,9 @@
-Next-tv is a web app for watching movies...
+Next-tv is a web app for watching movies and series (tv-shows). it built in using the following web technologies:
+ - NextJs.
+ - TailWindCss.
+ - SanityIO (Database).
+
+--- 
 
 ## Getting Started
 

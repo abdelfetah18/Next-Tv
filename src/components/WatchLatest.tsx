@@ -6,7 +6,7 @@ import { c_latest, c_movie, c_serie } from "@/types/client";
 interface Props {
     title: string,
     latest: c_latest[],
-    recently: c_movie[]
+    recently: c_latest[]
 };
 
 const WatchLatest: React.FC<Props> = ({ title, latest, recently }) => {
@@ -56,9 +56,10 @@ const WatchLatest: React.FC<Props> = ({ title, latest, recently }) => {
                     recently.map((v,index) => {
                         return(
                             <div key={index} className="w-1/3 h-40 mb-16">
-                                <div className="w-11/12 h-full bg-gray-500 rounded-lg"></div>
-                                <div className="text-base font-bold text-white mt-2">{v.title}</div>
-                                <div className="text-xs font-semibold text-[#bababa]">{v.title}</div>
+                                <div className="w-11/12 h-full bg-gray-500 rounded-lg">
+                                    <img className="h-full rounded-lg" src={v.cover_image ? v.cover_image.url : "thumb.jpg"} />
+                                </div>
+                                <div className="px-2 text-sm font-bold text-white mt-2 ">{v.title}</div>
                             </div>
                         )
                     })

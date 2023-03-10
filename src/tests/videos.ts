@@ -26,5 +26,6 @@ for(let i = 0; i < 10; i++)
     date: "01-06-2003",
     duration: "1h 30m",
     _type: "movies",
-    episodes: []
+    episodes: [],
+    total_episodes: 0
 });
