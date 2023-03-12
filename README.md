@@ -18,7 +18,7 @@ then run the devlopement server:
 npm run dev
 ```
 ---
-![home](https://raw.githubusercontent.com/abdelfetah18/Next-Tv/main/public/home.png)
+![home](https://raw.githubusercontent.com/abdelfetah18/Next-Tv/main/public/1.png)
 ![2](https://raw.githubusercontent.com/abdelfetah18/Next-Tv/main/public/2.png)
 ![3](https://raw.githubusercontent.com/abdelfetah18/Next-Tv/main/public/3.png)
 ![4](https://raw.githubusercontent.com/abdelfetah18/Next-Tv/main/public/4.png)
