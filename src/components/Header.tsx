@@ -1,6 +1,9 @@
+import useAuth from "@/hooks/Auth"
 import { FaTv, FaFilm, FaFolder, FaAngleDown, FaUser, FaPlay } from "react-icons/fa"
 
 export default function Header(){
+    const isAuth = useAuth();
+
     return (
         <div className="w-11/12 h-fit max-w-[1600px] flex flex-row items-center justify-between py-4">
             <a href="/" className="flex flex-row items-center">
@@ -25,15 +28,24 @@ export default function Header(){
                 </div>
             </div>
 
-            <div className="flex flex-row items-center">
-                <a href="/user/sign_in" className="flex flex-row items-center ml-8 cursor-pointer hover:text-purple-500 duration-500 text-white text-base font-bold">
-                    <FaUser />
-                    <div className="ml-2">Login</div>
-                </a>
-                <a href="/user/sign_up" className="flex flex-row items-center ml-8 cursor-pointer hover:text-purple-500 duration-500 text-white text-base font-bold">
-                    <div className="ml-2 px-4 py-2 rounded-3xl border-2 border-white hover:border-purple-500">Register</div>
-                </a>
-            </div>
+            {
+                isAuth ? (
+                    <div className="flex flex-row items-center">
+                        <FaUser className="text-white text-lg" />
+                        <div className="ml-2 text-white text-sm font-bold">@abdelfetah</div>
+                    </div>
+                ) : (
+                    <div className="flex flex-row items-center">
+                        <a href="/user/sign_in" className="flex flex-row items-center ml-8 cursor-pointer hover:text-purple-500 duration-500 text-white text-base font-bold">
+                            <FaUser />
+                            <div className="ml-2">Login</div>
+                        </a>
+                        <a href="/user/sign_up" className="flex flex-row items-center ml-8 cursor-pointer hover:text-purple-500 duration-500 text-white text-base font-bold">
+                            <div className="ml-2 px-4 py-2 rounded-3xl border-2 border-white hover:border-purple-500">Register</div>
+                        </a>
+                    </div>
+                )
+            }
         </div>
     )
 }

@@ -5,13 +5,16 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function Home(){
+  const [is_search,setIsSearch] = useState(false);
   const [watch_latest,setWatchLatest] = useState([]);
   const [recently,setRecently] = useState([]);
 
   useEffect(() => {
-    getWatchLatest();
-    getRecently();
-  },[]);
+    if(!is_search){
+      getWatchLatest();
+      getRecently();
+    }
+  },[is_search]);
 
   function getWatchLatest(){
     axios.get("/api/watch_latest").then(response => {
@@ -39,8 +42,8 @@ export default function Home(){
     <div className="w-full background_image bg-black">
       <div className="w-full flex flex-col items-center bg-gradient-to-b from-black via-gray-900/40 to-gray-900">
         <Header />
-        <SearchBanner />
-        <WatchLatest title="Watch Latest" latest={watch_latest} recently={recently} />
+        <SearchBanner setIsSearch={setIsSearch} setResult={setWatchLatest} />
+        <WatchLatest title={is_search ? "Searching..." : "Watch Latest"} latest={watch_latest} recently={recently} />
       </div>
     </div>
   )

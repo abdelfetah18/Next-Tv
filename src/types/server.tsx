@@ -48,3 +48,9 @@ export interface s_serie {
     cover_image: s_image,
     categories: s_ref[],
 };
+
+export interface s_view {
+    video: s_ref,
+    user: s_ref,
+    ip_address: string
+};

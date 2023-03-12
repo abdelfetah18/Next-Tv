@@ -3,11 +3,13 @@ import createClient from '@sanity/client';
 import { createReadStream } from "fs";
 import { basename } from "path";
 import { c_movie, c_server, c_user, c_user_credentials } from "@/types/client";
-import { s_episode, s_movie, s_serie } from "@/types/server";
+import { s_episode, s_movie, s_serie, s_view } from "@/types/server";
 
 const movie_props = '{ _id, title, description, "cover_image": cover_image.asset->, categories[]->, servers[]->, duration, date, _createdAt, _type }';
 const episode_props = '{ _id, "serie": serie._ref, title, description, "cover_image": cover_image.asset->, servers[]->, duration, date, _createdAt, _type }';
 const serie_props = '{ _id, title, description, "cover_image": cover_image.asset->, categories[]->, "episodes":*[_type=="episode" && serie._ref==^._id]'+episode_props+', duration, date, _createdAt, _type }';
+
+// TODO: Add views property to movie and episode objects.
 
 class Client {
     client:any = null;
@@ -200,6 +202,16 @@ class Client {
     async getRecently(){
         let recent = await this.client.fetch('[...*[_type == "movie"]'+movie_props+',...*[_type == "serie"]'+serie_props+'] | order(_createdAt desc)[0..2]');
         return recent;
+    }
+
+    async createView(view:s_view){
+        let r_view = await this.client.create({ _type:"views", video: view.video, user: view.user, ip_address: view.ip_address });
+        return r_view;
+    }
+
+    async search(query:string){
+        let result = await this.client.fetch('[...*[_type == "movie" && title match $query]'+movie_props+',...*[_type == "serie" && title match $query+"*"]'+serie_props+'] | order(_createdAt desc)',{ query });
+        return result;
     }
 }
 
