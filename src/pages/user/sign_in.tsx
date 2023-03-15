@@ -1,8 +1,10 @@
+import useCookies from "@/hooks/CookiesManager";
 import axios from "axios";
 import { useState } from "react";
 import { FaFacebook, FaGithub, FaInstagram, FaTwitter } from "react-icons/fa";
 
 export default function SignIn(){
+    const { setCookie } = useCookies();
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
 
@@ -10,10 +12,8 @@ export default function SignIn(){
         axios.post("/api/user/sign_in", { username, password }).then(response => {
             if(response.data.status == "success"){
                 window.localStorage.setItem("session", response.data.data.session_id);
-                
-                // FIXME: Change the way of setting cookies by using a library or implement such a wrappers for it.
-                // also use expiresAt and httpOnly flag. 
-                document.cookie = "session="+response.data.data.session_id+"; path=/";
+                setCookie("session", response.data.data.session_id, { Path: "/" } );
+                // Redirect to Home.
                 window.location.href = "/";
             }else{
                 // TODO: show error message.

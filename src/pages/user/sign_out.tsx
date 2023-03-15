@@ -1,10 +1,12 @@
+import useCookies from "@/hooks/CookiesManager";
 import axios from "axios";
 import { useEffect } from "react";
 
 
 // TODO: show some loading animation.
 export default function SignOut(){
-    
+    const { removeCookie } = useCookies();
+
     useEffect(() => {
         sign_out();
     },[]);
@@ -13,7 +15,8 @@ export default function SignOut(){
         axios.get("/api/user/sign_out",{ headers: { Authorization: "" } }).then(response => {
             if(response.data.status == "success"){
                 window.localStorage.removeItem("session");
-                document.cookie = "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                removeCookie("session");
+                // Redirect to SignIn page.
                 window.location.href = "/user/sign_in";
             }else{
                 // TODO: show error message.
