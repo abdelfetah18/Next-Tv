@@ -58,12 +58,6 @@ export default function Create({ episode_doc }:Props){
 
         // Prepare servers
         for(let i = 0; i < servers.length; i++){
-            // FIXME: I think this is not a save implementation
-            // because when the user have a control over _ref or _id
-            // an atacker can leak data from other types like a user
-            // and that can be done when the developer do not specify
-            // the properties that need for such an object. :)
-            
             data.servers.push({ _type: "reference", _ref: servers[i]._id, _key: servers[i]._id, });
         }
 

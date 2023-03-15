@@ -65,23 +65,11 @@ export default function Create({ movie_doc }:Props){
 
         // Prepare categories
         for(let i = 0; i < categories.length; i++){
-            // FIXME: I think this is not a save implementation
-            // because when the user have a control over _ref or _id
-            // an atacker can leak data from other types like a user
-            // and that can be done when the developer do not specify
-            // the properties that need for such an object. :)
-
             data.categories.push({ _type: "reference", _ref: categories[i]._id, _key: categories[i]._id, });
         }
 
         // Prepare servers
         for(let i = 0; i < servers.length; i++){
-            // FIXME: I think this is not a save implementation
-            // because when the user have a control over _ref or _id
-            // an atacker can leak data from other types like a user
-            // and that can be done when the developer do not specify
-            // the properties that need for such an object. :)
-            
             data.servers.push({ _type: "reference", _ref: servers[i]._id, _key: servers[i]._id, });
         }
 
