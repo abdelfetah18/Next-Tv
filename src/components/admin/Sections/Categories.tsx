@@ -1,4 +1,6 @@
 import { c_category } from "@/types/client";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import DropBox from "../DropBox";
 import { SectionHeader } from "../SectionHeader";
@@ -12,7 +14,28 @@ interface Props {
 };
 
 export default function Categories({ categories, setCategories, selected_category, setSelectedCategory, setDialogCategoryOpen }: Props){
-    
+    const [other_categories,setOtherCategories] = useState([]);
+
+    useEffect(() => {
+        getOtherCategories();
+    },[]);
+
+    function getOtherCategories(){
+        axios.get("/api/admin/category/all").then(response => {
+            if(response.data.status == "success"){
+                setOtherCategories(response.data.data);
+                if(response.data.data.length > 0){
+                    setSelectedCategory(response.data.data[0]);
+                }
+            }else{
+                // FIXME: show error message.
+            }
+        }).catch(err => {
+            console.log(err);
+            // FIXME: handle errors.
+        });
+    }
+
     function addCategory(ev:any){
         ev.preventDefault();
         setCategories(state => [selected_category,...state]);
@@ -45,20 +68,16 @@ export default function Categories({ categories, setCategories, selected_categor
                             })
                         }
                     </div>
-                    {
-                        categories.length == 0 ? (
-                            <div className="w-full flex flex-col items-center my-4">
-                                <div onClick={(ev) => setDialogCategoryOpen(true) } className="cursor-pointer px-20 py-2 bg-gray-700 hover:bg-gray-700/60 rounded-lg text-sm text-white font-bold text-center">Create new categorie</div>
-                            </div>
-                        ) : (
-                            <div className="w-full flex flex-row items-center my-4">
-                                <div className="mr-2 flex-grow">
-                                    <DropBox list={categories} selected={selected_category} setSelected={setSelectedCategory} />
-                                </div>
-                                <div onClick={addCategory} className="px-8 py-2 text-sm text-white font-bold bg-green-600 rounded-lg cursor-pointer">Add</div>
-                            </div>
-                        )
-                    }
+                    <div className="w-full flex flex-row items-center my-4">
+                        <div className="mr-2 flex-grow">
+                            <DropBox list={other_categories} selected={selected_category} setSelected={setSelectedCategory} />
+                        </div>
+                        <div onClick={addCategory} className="px-8 py-2 text-sm text-white font-bold bg-green-600 rounded-lg cursor-pointer">Add</div>
+                    </div>
+                    <div className="w-full flex flex-col items-center my-4">
+                        <div onClick={(ev) => setDialogCategoryOpen(true) } className="cursor-pointer px-20 py-2 bg-gray-700 hover:bg-gray-700/60 rounded-lg text-sm text-white font-bold text-center">Create new categorie</div>
+                    </div>
+                
                 </div>
             </div>
         </div>

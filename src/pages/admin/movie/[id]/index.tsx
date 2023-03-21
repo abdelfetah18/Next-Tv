@@ -47,11 +47,11 @@ export default function Create({ movie_doc }:Props){
     const [servers,setServers] = useState<c_server[]>(movie_doc.servers);
     const [image_info,setImageInfo] = useState(movie_doc.cover_image);
     const [cover_image,setCoverImage] = useState(movie_doc.cover_image ? movie_doc.cover_image.url : "/3.png");
-    const [selected_category,setSelectedCategory] = useState({ name: "action "} as c_category);
+    const [selected_category,setSelectedCategory] = useState<c_category>(movie_doc.categories.length > 0 ? movie_doc.categories[0] : { _id: "" , name:"test" });
     const [duration,setDuration] = useState(movie_doc.duration);
     const [dialog_category_open,setDialogCategoryOpen] = useState(false);
 
-    function createNewMovie(){
+    function PublishOrSaveMovie(publish=false){
         let data: s_movie = { 
             _id: movie_doc._id,
             title,
@@ -72,12 +72,13 @@ export default function Create({ movie_doc }:Props){
         for(let i = 0; i < servers.length; i++){
             data.servers.push({ _type: "reference", _ref: servers[i]._id, _key: servers[i]._id, });
         }
-
-        axios.post("/api/admin/movie/update", data).then((response) => {
+        
+        axios.post(publish ? "/api/admin/movie/publish" : "/api/admin/movie/update", data).then((response) => {
             // TODO: Show a success message and redirect to movie page
-            console.log(response.data);
             if(response.data.status == "success"){
-                window.location.pathname = "/movies/"+data._id;
+                console.log(response.data);
+                if(publish)
+                    window.location.pathname = "/movies/"+response.data.data._id;
             }            
         });
     }
@@ -104,8 +105,10 @@ export default function Create({ movie_doc }:Props){
                         <Thumbnail setCoverImage={setCoverImage} setImageInfo={setImageInfo} />
 
                         <div className="w-11/12 flex flex-row items-center justify-center mt-8">
-                            <div onClick={createNewMovie} className="px-6 py-1 mx-1 text-white font-bold rounded-lg bg-blue-600 hover:bg-blue-700 cursor-pointer">Save</div>
-                            <div onClick={createNewMovie} className="px-8 py-1 mx-1 text-white font-bold rounded-lg bg-green-600 hover:bg-green-700 cursor-pointer">Publish</div>
+                            <div onClick={ev => { ev.preventDefault(); PublishOrSaveMovie(false); }} className="px-6 py-1 mx-1 text-white font-bold rounded-lg bg-blue-600 hover:bg-blue-700 cursor-pointer">Save</div>
+                            {
+                                movie_doc._id.startsWith("drafts.") && <div onClick={ev => { ev.preventDefault(); PublishOrSaveMovie(true); }} className="px-8 py-1 mx-1 text-white font-bold rounded-lg bg-green-600 hover:bg-green-700 cursor-pointer">Publish</div>
+                            }
                         </div>
 
                     </div>

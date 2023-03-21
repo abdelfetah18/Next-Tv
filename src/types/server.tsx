@@ -54,3 +54,7 @@ export interface s_view {
     user: s_ref,
     ip_address: string
 };
+
+export interface s_category {
+    name: string,
+};

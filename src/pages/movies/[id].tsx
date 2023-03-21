@@ -42,8 +42,10 @@ export default function Movie(){
         let path_trace = window.location.pathname.split("/");
         let movie_id = path_trace[path_trace.length-1];
         axios.get("/api/movies/"+movie_id).then(response => {
-            if(response.data.status == "success"){
+            if(response.data.status == "success" && response.data.data){
                 setMovie(response.data.data);
+            }else{
+                // FIXME: handle the error.
             }
         }).catch(err => {
             console.log(err);

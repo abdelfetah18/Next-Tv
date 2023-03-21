@@ -51,7 +51,7 @@ export default function Create({ serie_doc }:Props){
     const [dialog_category_open,setDialogCategoryOpen] = useState(false);
 
 
-    function createNewSerie(){
+    function publishOrSaveSerie(publish=false){
         let data: s_serie = { 
             _id: serie_doc._id,
             title,
@@ -67,11 +67,11 @@ export default function Create({ serie_doc }:Props){
             data.categories.push({ _type: "reference", _ref: categories[i]._id, _key: categories[i]._id, });
         }
 
-        axios.post("/api/admin/serie/update", data).then((response) => {
+        axios.post(publish ? "/api/admin/serie/publish" : "/api/admin/serie/update", data).then((response) => {
             // TODO: Show a success message and redirect to serie page
             console.log(response.data);  
             if(response.data.status == "success"){
-                window.location.pathname = "/series/"+data._id;
+                window.location.pathname = "/series/"+response.data.data._id;
             }          
         });
     }
@@ -97,8 +97,12 @@ export default function Create({ serie_doc }:Props){
                         <Thumbnail setCoverImage={setCoverImage} setImageInfo={setImageInfo} />
 
                         <div className="w-11/12 flex flex-row items-center justify-center mt-8">
-                            <div onClick={createNewSerie} className="px-6 py-1 mx-1 text-white font-bold rounded-lg bg-blue-600 hover:bg-blue-700 cursor-pointer">Save</div>
-                            <div onClick={createNewSerie} className="px-8 py-1 mx-1 text-white font-bold rounded-lg bg-green-600 hover:bg-green-700 cursor-pointer">Publish</div>
+                            <div onClick={(ev) => { ev.preventDefault(); publishOrSaveSerie(false); }} className="px-6 py-1 mx-1 text-white font-bold rounded-lg bg-blue-600 hover:bg-blue-700 cursor-pointer">Save</div>
+                            {
+                                serie_doc._id.startsWith("drafts.") && (
+                                    <div onClick={(ev) => { ev.preventDefault(); publishOrSaveSerie(true); }} className="px-8 py-1 mx-1 text-white font-bold rounded-lg bg-green-600 hover:bg-green-700 cursor-pointer">Publish</div>
+                                )
+                            }
                         </div>
                     </div>
                     <div className="w-1/3 flex flex-col items-center">

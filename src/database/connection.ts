@@ -3,11 +3,12 @@ import createClient from '@sanity/client';
 import { createReadStream } from "fs";
 import { basename } from "path";
 import { c_movie, c_server, c_user, c_user_credentials } from "@/types/client";
-import { s_episode, s_movie, s_serie, s_view } from "@/types/server";
+import { s_category, s_episode, s_movie, s_serie, s_view } from "@/types/server";
 
 const movie_props = '{ _id, title, description, "cover_image": cover_image.asset->, categories[]->, servers[]->, duration, date, _createdAt, _type }';
 const episode_props = '{ _id, "serie": serie._ref, title, description, "cover_image": cover_image.asset->, servers[]->, duration, date, _createdAt, _type }';
 const serie_props = '{ _id, title, description, "cover_image": cover_image.asset->, categories[]->, "episodes":*[_type=="episode" && serie._ref==^._id]'+episode_props+', duration, date, _createdAt, _type }';
+const category_props = '{ _id, name }';
 
 // TODO: Add views property to movie and episode objects.
 
@@ -93,6 +94,23 @@ class Client {
     }
     
     async updateMovie(movie:s_movie){
+        let doc:s_movie = { 
+            _id: movie._id,
+            title: movie.title,
+            description: movie.description,
+            servers: movie.servers,
+            categories: movie.categories,
+            cover_image: movie.cover_image,
+            date: "",
+            duration: movie.duration,
+        };
+
+        let movie_r = await this.client.patch(doc._id).set({ ...doc }).commit();
+        
+        return movie_r;
+    }
+
+    async publishMovie(movie:s_movie){
         // publish the document by changing the _id from drafts._id to _id.
         let doc:s_movie = { 
             _id: movie._id && movie._id.startsWith("drafts.") ? movie._id.slice(7) : movie._id,
@@ -108,7 +126,8 @@ class Client {
         let movie_r = await this.client.createOrReplace({ ...doc, _type: "movie" });
         
         // removing the draft
-        await this.client.delete(movie._id);
+        if(movie._id.startsWith("drafts."))
+            await this.client.delete(movie._id);
         
         return movie_r;
     }
@@ -144,10 +163,28 @@ class Client {
             duration: serie.duration,
         };
 
+        let serie_r = await this.client.patch(serie._id).set({ ...doc }).commit();
+        
+        return serie_r;
+    }
+
+    async publishSerie(serie:s_serie){
+        // publish the document by changing the _id from drafts._id to _id.
+        let doc:s_serie = { 
+            _id: serie._id && serie._id.startsWith("drafts.") ? serie._id.slice(7) : serie._id,
+            title: serie.title,
+            description: serie.description,
+            categories: serie.categories,
+            cover_image: serie.cover_image,
+            date: (new Date()).toLocaleString(),
+            duration: serie.duration,
+        };
+
         let serie_r = await this.client.createOrReplace({ ...doc, _type: "serie" });
         
         // removing the draft
-        await this.client.delete(serie._id);
+        if(serie._id.startsWith("drafts."))
+            await this.client.delete(serie._id);
         
         return serie_r;
     }
@@ -211,6 +248,21 @@ class Client {
 
     async search(query:string){
         let result = await this.client.fetch('[...*[_type == "movie" && title match $query]'+movie_props+',...*[_type == "serie" && title match $query+"*"]'+serie_props+'] | order(_createdAt desc)',{ query });
+        return result;
+    }
+
+    async getCategories(){
+        let result = await this.client.fetch('*[_type == "category"]'+category_props);
+        return result;
+    }
+
+    async createCategory(category:s_category){
+        let category_doc = await this.client.create({ _type: "category", name: category.name });
+        return category_doc;
+    }
+
+    async getByCategory(category:string){
+        let result = await this.client.fetch('[...*[_type=="serie" && $category in categories[]->.name ]'+serie_props+',...*[_type=="movie" && $category in categories[]->.name ]'+movie_props+'] | order(_createdAt desc)',{ category });
         return result;
     }
 }

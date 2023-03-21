@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaFilm, FaHome, FaPlus, FaTv } from "react-icons/fa";
+import { FaFilm, FaFolder, FaHome, FaPlus, FaTv } from "react-icons/fa";
 
 interface Props {
     path: string
@@ -39,15 +39,18 @@ export default function Navigation({ path }:Props){
                     ) : ("")
                 }
             </div>
-            <a href="/admin/movie" className={"w-11/12 flex flex-row items-center hover:bg-gray-800 cursor-pointer rounded px-4 py-2 "+ (path == "movie" ? "bg-gray-800" : "")}>
+            <a href="/admin/movie" className={"w-11/12 flex flex-row items-center hover:bg-gray-800 cursor-pointer rounded px-4 py-2 "+ (path == "movies" ? "bg-gray-800" : "")}>
                 <div className="text-lg text-white font-bold mx-2"><FaFilm /></div>
                 <div className="text-lg text-white font-bold mx-2">Movies</div>
             </a>
-            <a href="/admin/serie" className={"w-11/12 flex flex-row items-center hover:bg-gray-800 cursor-pointer rounded px-4 py-2 "+ (path == "serie" ? "bg-gray-800" : "")}>
+            <a href="/admin/serie" className={"w-11/12 flex flex-row items-center hover:bg-gray-800 cursor-pointer rounded px-4 py-2 "+ (path == "series" ? "bg-gray-800" : "")}>
                 <div className="text-lg text-white font-bold mx-2"><FaTv /></div>
                 <div className="text-lg text-white font-bold mx-2">Series</div>
             </a>
-            
+            <a href="/admin/categories" className={"w-11/12 flex flex-row items-center hover:bg-gray-800 cursor-pointer rounded px-4 py-2 "+ (path == "categories" ? "bg-gray-800" : "")}>
+                <div className="text-lg text-white font-bold mx-2"><FaFolder /></div>
+                <div className="text-lg text-white font-bold mx-2">Categories</div>
+            </a>
         </div>
     )
 }

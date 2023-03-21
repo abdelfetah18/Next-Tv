@@ -23,7 +23,7 @@ const DropBox = function ({ list, selected, setSelected }:Props){
                             list.map((item,index) => {
                                 if(item.name != selected.name)
                                     return(
-                                        <div onClick={(evt) => setSelected(item)} key={index} className="text-white text-sm font-semibold px-4 py-2 w-full cursor-pointer hover:bg-gray-800/50">{item.name}</div>
+                                        <div onClick={(evt) => { console.log(item); setSelected(item);}} key={index} className="text-white text-sm font-semibold px-4 py-2 w-full cursor-pointer hover:bg-gray-800/50">{item.name}</div>
                                     )
                                 return <></>
                             })

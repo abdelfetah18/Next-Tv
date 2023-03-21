@@ -27,7 +27,7 @@ export default function Serie({ series }: Props){
                     <div className="text-3xl text-white font-bold">Tv</div>
                 </div>
 
-                <Navigation path={"serie"} />
+                <Navigation path={"series"} />
             </div>
             <div className="w-4/5 h-full overflow-auto flex flex-col items-center">
                 <div className="w-11/12 text-white font-bold text-3xl py-8">Series</div>
