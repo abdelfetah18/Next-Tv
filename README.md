@@ -3,6 +3,8 @@ Next-tv is a web app for watching movies and series (tv-shows). it built in usin
  - TailWindCss.
  - SanityIO (Database).
 
+Preview: [click here](https://next-tv-sandy.vercel.app/)
+
 --- 
 
 ## Getting Started
