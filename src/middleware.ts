@@ -5,6 +5,9 @@ import client from './database/connection';
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
+  let url = new URL(request.url);
+  let path = url.pathname;
+
   let session = request.cookies.get("session");
   if(session){
     let sessions = await client.Auth(session.value);
@@ -12,6 +15,14 @@ export async function middleware(request: NextRequest) {
       const response = NextResponse.redirect(new URL('/user/sign_in', request.url));
       response.cookies.delete("session");
       return response;
+    }else{
+      if(path.startsWith("/admin")){
+        let user = await client.getUser(sessions[0]._id);
+        if(!(user && user.username == process.env.ADMIN_USERNAME)){
+          const response = NextResponse.redirect(new URL('/', request.url));
+          return response;
+        }
+      }
     }
   }else{
     return NextResponse.redirect(new URL('/user/sign_in', request.url));
