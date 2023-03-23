@@ -14,16 +14,16 @@ const VideoPlayer : React.FC<Props> = function ({ video, has_playlist }){
     return(
         <div className="w-11/12 h-fit flex flex-col items-center py-8">
             <div className="w-11/12 h-fit flex flex-row items-center py-8">
-                <div className="w-4/5 h-[500px] flex flex-col">
+                <div className="w-4/5 h-[600px] flex flex-col">
                     {
                         seleted_server ? (
-                            <iframe className="mr-4 h-full rounded-lg" src={seleted_server.url} />
+                            <iframe allowFullScreen={true} className="mr-4 h-full rounded-lg" src={seleted_server.url} />
                         ) : (
                             <div className="w-11/12 h-full flex flex-col items-center justify-center bg-gray-800/40 rounded-lg text-xl text-center text-white font-bold">No servers available yet.</div>
                         )
                     }
                 </div>
-                <div className="w-1/5 h-[500px] flex flex-col items-center pb-2">
+                <div className="w-1/5 h-[600px] flex flex-col items-center pb-2">
                     <Box title="Servers List" items={video.servers} selected={seleted_server} setSelected={setSelectedServer} />
                 </div>
             </div>
