@@ -16,8 +16,8 @@ export async function middleware(request: NextRequest) {
       response.cookies.delete("session");
       return response;
     }else{
-      if(path.startsWith("/admin")){
-        let user = await client.getUser(sessions[0]._id);
+      if(path.startsWith("/admin") || path.startsWith("/api/admin")){
+        let user = await client.getUser(sessions[0].session_id);
         if(!(user && user.username == process.env.ADMIN_USERNAME)){
           const response = NextResponse.redirect(new URL('/', request.url));
           return response;

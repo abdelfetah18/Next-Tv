@@ -1,23 +1,28 @@
 import useCookies from "@/hooks/CookiesManager";
 import axios from "axios";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { FaFacebook, FaGithub, FaInstagram, FaTwitter } from "react-icons/fa";
+import AlertMessage from "@/components/AlertMessage";
 
 export default function SignIn(){
+    const [alert_message,setAlertMessage] = useState("");
     const { setCookie } = useCookies();
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
 
-    function sign_in(){
+    function sign_in(ev:FormEvent){
+        ev.preventDefault();
         axios.post("/api/user/sign_in", { username, password }).then(response => {
             if(response.data.status == "success"){
                 window.localStorage.setItem("session", response.data.data.session_id);
                 setCookie("session", response.data.data.session_id, { Path: "/" } );
+                setAlertMessage("Login success!");
                 // Redirect to Home.
-                window.location.href = "/";
+                setTimeout(() => {
+                    window.location.href = "/";                    
+                }, 1000);
             }else{
-                // TODO: show error message.
-                console.log(response.data);
+                setAlertMessage("Error: "+response.data.message);
             }
         }).catch(err => {
             console.log(err); // FIXME: handle errors
@@ -26,13 +31,15 @@ export default function SignIn(){
 
     return(
         <div className="w-full h-screen background_image bg-black">
-            <div className="w-full h-full flex flex-col items-center bg-gradient-to-b from-black via-gray-900/40 to-gray-900">
-                <div className="text-3xl text-white font-mono font-bold py-2 my-4">Sign In</div>
-                <div className="w-1/3 flex flex-col items-center bg-gray-900/80 rounded-lg py-12 my-16">
-                    <input className="w-3/4 text-base font-bold px-4 py-1 my-2 rounded-full" type="text" placeholder="username" onChange={(ev) => setUsername(ev.target.value)} value={username} />
-                    <input className="w-3/4 text-base font-bold px-4 py-1 my-2 rounded-full" type="password" placeholder="password" onChange={(ev) => setPassword(ev.target.value)} value={password} />
-                    <div onClick={sign_in} className="text-white text-base font-bold px-4 py-1 my-2 rounded-full bg-blue-500 cursor-pointer hover:bg-blue-600">Sign In</div>
-                    <div className="text-white text-base font-bold">Or</div>
+            <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-black via-gray-900/40 to-gray-900">
+                <div className="text-3xl text-white font-mono font-bold py-2">Sign In</div>
+                <form id="login-form" onSubmit={sign_in} className="w-1/3 flex flex-col items-center bg-gray-900/80 rounded-lg py-12 mt-16">
+                    <input className="w-3/4 text-base px-6 py-1 my-2 rounded-lg" type="text" placeholder="username" onChange={(ev) => setUsername(ev.target.value)} value={username} />
+                    <input className="w-3/4 text-base px-6 py-1 my-2 rounded-lg" type="password" placeholder="password" onChange={(ev) => setPassword(ev.target.value)} value={password} />
+                    <input type={"submit"} className="text-white text-sm font-bold px-8 py-1 mt-4 rounded-full bg-blue-500 cursor-pointer hover:bg-blue-600" value={"Sign In"} />
+                </form>
+                <div className="w-1/3 flex flex-col items-center mb-16">
+                    <div className="text-white text-base font-bold my-4">Or</div>
                     <a href="/user/sign_up" className="text-blue-500 hover:text-blue-400 text-sm font-medium cursor-pointer">Create an account</a>
                 </div>
                 <div className="text-white font-mono">
@@ -60,6 +67,7 @@ export default function SignIn(){
                     <div className="text-white font-mono">This app is created and design by <b>AbdelfetahDev</b></div>
                 </div>
             </div>
+            <AlertMessage message={alert_message} />
         </div>
     )
 }

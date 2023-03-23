@@ -5,6 +5,7 @@ import { basename } from "path";
 import { c_movie, c_server, c_user, c_user_credentials } from "@/types/client";
 import { s_category, s_episode, s_movie, s_serie, s_view } from "@/types/server";
 
+const user_props = '{ _id, username, email, "cover_image": cover_image.asset-> }';
 const movie_props = '{ _id, title, description, "cover_image": cover_image.asset->, categories[]->, servers[]->, duration, date, _createdAt, _type }';
 const episode_props = '{ _id, "serie": serie._ref, title, description, "cover_image": cover_image.asset->, servers[]->, duration, date, _createdAt, _type }';
 const serie_props = '{ _id, title, description, "cover_image": cover_image.asset->, categories[]->, "episodes":*[_type=="episode" && serie._ref==^._id]'+episode_props+', duration, date, _createdAt, _type }';
@@ -66,13 +67,11 @@ class Client {
     }
 
     async getUser(session_id:string){
-        let session = await this.client.fetch('*[_type=="session" && session_id==$session_id]',{ session_id });
-        if(session.length > 0){
-            let user = await this.client.fetch('*[_type=="users" && _id==$user_id]{ _id,username,profile_image,email }',{ user_id: session[0].user._ref });
+        let user = await this.client.fetch('*[_type=="session" && session_id==$session_id].user->'+user_props,{ session_id });
+        if(user.length > 0){
             return user[0] || null;
-        }else{
-            return null;
         }
+        return null;
     }
     
     async initMovieDoc(){
