@@ -6,7 +6,6 @@ import { c_movie, c_server, c_user, c_user_credentials } from "@/types/client";
 import { s_category, s_episode, s_movie, s_serie, s_view } from "@/types/server";
 
 import { SanityClient } from "@sanity/client";
-import views from "database-server/schemas/views";
 
 const user_props = '{ _id, username, email, "cover_image": cover_image.asset-> }';
 const movie_props = '{ _id, title, description, "cover_image": cover_image.asset->, categories[]->, servers[]->, duration, date, _createdAt, _type }';
