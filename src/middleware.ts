@@ -31,5 +31,5 @@ export async function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/movies/:path*','/series/:path*','/admin/:path*','/api/movies/:path*','/api/series/:path*','/api/watch_latest'],
+  matcher: ['/movies/:path*','/series/:path*','/admin/:path*','/api/movies/:path*','/api/series/:path*'],
 }

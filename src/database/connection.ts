@@ -5,6 +5,9 @@ import { basename } from "path";
 import { c_movie, c_server, c_user, c_user_credentials } from "@/types/client";
 import { s_category, s_episode, s_movie, s_serie, s_view } from "@/types/server";
 
+import { SanityClient } from "@sanity/client";
+import views from "database-server/schemas/views";
+
 const user_props = '{ _id, username, email, "cover_image": cover_image.asset-> }';
 const movie_props = '{ _id, title, description, "cover_image": cover_image.asset->, categories[]->, servers[]->, duration, date, _createdAt, _type }';
 const episode_props = '{ _id, "serie": serie._ref, title, description, "cover_image": cover_image.asset->, servers[]->, duration, date, _createdAt, _type }';
@@ -14,7 +17,7 @@ const category_props = '{ _id, name }';
 // TODO: Add views property to movie and episode objects.
 
 class Client {
-    client:any = null;
+    client:SanityClient;
     constructor(){
         this.client = createClient({
             projectId: 'jp14vvjt',
@@ -264,6 +267,33 @@ class Client {
         let result = await this.client.fetch('[...*[_type=="serie" && $category in categories[]->.name ]'+serie_props+',...*[_type=="movie" && $category in categories[]->.name ]'+movie_props+'] | order(_createdAt desc)',{ category });
         return result;
     }
+
+    async getUsers(){
+        let result = await this.client.fetch('{ "total_users": count(*[_type=="users"]), "users":*[_type=="users"]'+user_props+' }');
+        return result;
+    }
+
+    async getViews(){
+        let result = await this.client.fetch('count(*[_type=="views"])');
+        return result;
+    }
+
+    async canView(user_id:string){
+        let result = await this.client.fetch('*[_type=="views" && user._ref==$user_id]', { user_id });
+        return result.length == 0;
+    }
+
+    async newView(view:s_view) {
+        let result = await this.client.create({ _type:"views", ...view });
+        return result;
+    }
+
+    // NOTE: Since we dont have a recommandation system, we will depend on views.
+    async getPopularVideos(){
+        // TODO: Group episodes by its series instead.
+        let result = await this.client.fetch('[...*[_type=="movie" && (_id in *[_type=="views"].video._ref)]'+movie_props+',...*[_type=="episode" && (_id in *[_type=="views"].video._ref)]'+episode_props+'] | order(views desc)');
+        return result;
+    }    
 }
 
 const client = new Client();

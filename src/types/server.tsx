@@ -1,4 +1,4 @@
-import { c_server } from "./client";
+import { c_server, c_user } from "./client";
 
 export interface s_ref {
     _type: string,
@@ -57,4 +57,15 @@ export interface s_view {
 
 export interface s_category {
     name: string,
+};
+
+export interface s_views {
+    user: s_ref,
+    video: s_ref,
+    ip_address: string,
+};
+
+export interface s_users {
+    total_users: string,
+    users: c_user[]
 };

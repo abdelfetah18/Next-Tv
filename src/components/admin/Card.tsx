@@ -1,7 +1,14 @@
+import { c_user } from "@/types/client";
+import { s_users } from "@/types/server";
 import { useState } from "react"
 import { FaArrowDown, FaArrowUp, FaEye, FaUser } from "react-icons/fa"
 
-export default function Card(){
+interface Props {
+    views: number,
+    users: s_users
+};
+
+export default function Card({ users, views }: Props){
     // TODO: Do some transtion when the selected Tab got changed.
     const [selectedTab,setSelectedTab] = useState("Views");
 
@@ -15,10 +22,10 @@ export default function Card(){
             </div>
             <div className="w-full flex flex-col items-center">
                 <div className="w-full flex flex-row items-center my-4 bg-gray-900 rounded-lg">
-                    <Tab Icon={FaUser} onClick={setSelectedTab} is_selected={selectedTab == "Users"} title={"Users"} value={"124"} percent={"7.8%"} percent_state={"down"} />
-                    <Tab Icon={FaEye} onClick={setSelectedTab} is_selected={selectedTab == "Views"} title={"Views"} value={"12546"} percent={"5.9%"} percent_state={"up"} />
+                    <Tab Icon={FaUser} onClick={setSelectedTab} is_selected={selectedTab == "Users"} title={"Users"} value={users.total_users} percent={"7.8%"} percent_state={"down"} />
+                    <Tab Icon={FaEye} onClick={setSelectedTab} is_selected={selectedTab == "Views"} title={"Views"} value={views.toString()} percent={"5.9%"} percent_state={"up"} />
                 </div>
-                { selectedTab == "Views" ? (<ViewsGraph />) : (<NewUsers />) }
+                { selectedTab == "Views" ? (<ViewsGraph />) : (<NewUsers users={users.users} />) }
             </div>
         </div>
     )
@@ -58,19 +65,23 @@ const Tab = ({ Icon, onClick, is_selected, title, value, percent, percent_state 
     )
 }
 
-const NewUsers = () => {
+interface NewUserProps {
+    users: c_user[]
+};
+
+const NewUsers = ({ users }:NewUserProps) => {
     return(
         <div className="w-full flex flex-col items-center">
             <div className="w-full text-lg font-bold text-white">Users</div>
             <div className="w-11/12 flex flex-row items-center justify-between my-4">
                 {
-                    [0,1,2,3,4].map((u,i) => {
+                    users.map((u,i) => {
                         return(
                             <div key={i} className="flex flex-col items-center mr-8">
                                 <div className="flex flex-col items-center justify-center bg-white rounded-full h-14 w-14 mb-2">
                                         <FaUser className="text-xl"/>
                                 </div>
-                                <div className="text-white text-sm font-mono">username</div>
+                                <div className="text-white text-sm font-mono">{u.username}</div>
                             </div>
                         )
                     })
