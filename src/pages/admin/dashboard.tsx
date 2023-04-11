@@ -72,7 +72,7 @@ export default function Dashboard(){
                                     return(
                                         <div key={index} className="w-11/12 flex flex-row mb-2 cursor-pointer rounded-lg hover:bg-gray-900/30">
                                             <div className="w-16 h-24 rounded-lg bg-gray-900">
-                                                <img className="w-full h-full object-cover rounded" src={v.cover_image.url} alt="cover_image" />
+                                                <img className="w-full h-full object-cover rounded" src={v.cover_image ? v.cover_image.url : "/thumb.jpg"} alt="cover_image" />
                                             </div>
                                             <div className="flex-grow flex flex-row items-center">
                                                 <div className="h-full flex flex-col flex-grow px-4 py-2">

@@ -21,7 +21,7 @@ const WatchLatest: React.FC<Props> = ({ title, latest, recently }) => {
                             return(
                                 <div key={index} className="w-1/5 mb-4">
                                     <div className="w-11/12 h-72 bg-gray-500 rounded-lg relative">
-                                        <img className="h-full rounded-lg" src={v.cover_image.url} />
+                                        <img className="h-full rounded-lg" src={v.cover_image ? v.cover_image.url : "/thumb.jpg"} />
                                         <div className="absolute top-0 left-0 p-3 m-2 cursor-pointer bg-blue-900 rounded-full">
                                             <FaBookmark className="text-xs text-white" />
                                         </div>
