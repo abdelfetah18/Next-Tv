@@ -1,4 +1,4 @@
-Next-tv is a web app for watching movies and series (tv-shows). it built in using the following web technologies:
+Next-tv is a web app for watching movies and series (tv-shows). its made using the following web technologies:
  - NextJs. (with typescript)
  - TailWindCss.
  - SanityIO (Database).
@@ -20,12 +20,14 @@ then run the devlopement server:
 npm run dev
 ```
 ---
-![home](https://raw.githubusercontent.com/abdelfetah18/Next-Tv/main/public/1.png)
-![2](https://raw.githubusercontent.com/abdelfetah18/Next-Tv/main/public/2.png)
-![3](https://raw.githubusercontent.com/abdelfetah18/Next-Tv/main/public/3.png)
-![4](https://raw.githubusercontent.com/abdelfetah18/Next-Tv/main/public/4.png)
-![5](https://raw.githubusercontent.com/abdelfetah18/Next-Tv/main/public/5.png)
+![home](https://raw.githubusercontent.com/abdelfetah18/Next-Tv/main/public/home.png)
+![movie](https://raw.githubusercontent.com/abdelfetah18/Next-Tv/main/public/movie.png)
+![create-new-movie](https://raw.githubusercontent.com/abdelfetah18/Next-Tv/main/public/create-new-movie.png)
+![movies-dashboard](https://raw.githubusercontent.com/abdelfetah18/Next-Tv/main/public/movies-dashboard.png)
 
 ---
 
-# Comming Soon
+## Database
+
+![database](https://raw.githubusercontent.com/abdelfetah18/Next-Tv/main/public/database.png)
+
