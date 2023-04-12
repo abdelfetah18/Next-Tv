@@ -33,7 +33,9 @@ class Client {
         let hashed_password = hash.digest("hex");
         let _user = await this.client.fetch('*[_type=="users" && username==$username && password==$hashed_password]{ _id,username,profile_image,email }',{ username: user.username, hashed_password });
         if(_user.length > 0){
-            // FIXME: find a better way to generate session_id
+            // FIXME: Find a better way to generate session_id.
+            //        We my use auto generated _id document from SanityIO
+            //        because its random and unique.
             let session_id = crypto.randomUUID();
             let session = await this.client.create({
                 _type: "session",

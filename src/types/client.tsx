@@ -62,11 +62,11 @@ export interface c_serie {
 };
 
 
-// FIXME: do the reverse insted of extending from c_serie and c_movie
+// FIXME: Do the reverse insted of extending from c_serie and c_movie
 // make them extends from c_latest and also find a better name for that type
 export interface c_latest extends c_serie, c_movie {
     _type: string
 }
 
-// FIXME: do the reverse insted of extending from c_movie and c_episode make them extends from c_video.
+// FIXME: Do the reverse insted of extending from c_movie and c_episode make them extends from c_video.
 export interface c_video extends c_movie, c_episode { };
