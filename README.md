@@ -24,6 +24,7 @@ npm run dev
 ![movie](https://raw.githubusercontent.com/abdelfetah18/Next-Tv/main/public/movie.png)
 ![create-new-movie](https://raw.githubusercontent.com/abdelfetah18/Next-Tv/main/public/create-new-movie.png)
 ![movies-dashboard](https://raw.githubusercontent.com/abdelfetah18/Next-Tv/main/public/movies-dashboard.png)
+![watch-movie](https://raw.githubusercontent.com/abdelfetah18/Next-Tv/main/public/watch-movie.png)
 
 ---
 
