@@ -1,3 +1,7 @@
+Next Tv is a cutting-edge web application designed for streaming your favorite movies and TV shows. With a sleek and intuitive user interface, Next Tv offers a seamless viewing experience that's sure to keep you entertained for hours on end.
+
+Additionally, Next Tv includes an admin dashboard that provides crucial insights into user engagement and viewership data. With this powerful tool, administrators can easily track the number of users accessing the app and monitor how many views each piece of content is receiving.
+
 Next-tv is a web app for watching movies and series (tv-shows). its made using the following web technologies:
  - NextJs. (with typescript)
  - TailWindCss.
