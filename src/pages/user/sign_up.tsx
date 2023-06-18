@@ -52,7 +52,7 @@ export default function SignUp(){
                     <input type="password" className="w-3/4 text-base px-6 py-2 my-2 rounded-lg bg-gray-700/60 text-gray-200" placeholder="Confirm Password" onChange={(ev) => setConfirPassword(ev.target.value)} value={confirm_password} />
                     <input type="submit" className="text-gray-200 text-xs font-semibold px-12 py-2 mt-8 rounded-lg bg-blue-800 cursor-pointer hover:bg-blue-600" value={"Sign Up"} />
                     <div className="flex flex-row items-center mt-4">
-                        <div className="text-white text-xs">Already have an account ?</div>
+                        <div className="text-white text-xs">{"Already have an account ?"}</div>
                         <a href="/user/sign_in" className="ml-2 text-blue-400 hover:text-blue-400 text-xs font-normal cursor-pointer">Sign in</a>
                     </div>
                 </form>

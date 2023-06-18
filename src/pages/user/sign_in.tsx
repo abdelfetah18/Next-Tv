@@ -46,7 +46,7 @@ export default function SignIn(){
                     <input className="w-3/4 text-base px-6 py-2 my-2 rounded-lg bg-gray-700/60 text-gray-200" type="password" placeholder="Password" onChange={(ev) => setPassword(ev.target.value)} value={password} />
                     <input type={"submit"} className="text-gray-200 text-xs font-semibold px-12 py-2 mt-8 rounded-lg bg-blue-800 cursor-pointer hover:bg-blue-600" value={"SIGN IN"} />
                     <div className="flex flex-row items-center mt-4">
-                        <div className="text-white text-xs">Don't have an account yet ?</div>
+                        <div className="text-white text-xs">{"Don't have an account yet ?"}</div>
                         <a href="/user/sign_up" className="ml-2 text-blue-400 hover:text-blue-400 text-xs font-normal cursor-pointer">Create new account</a>
                     </div>
                 </form>
